@@ -13,7 +13,9 @@
                 <Table ref="table" :loading="loading" :columns="columns" :data="list" size="small"
                 @on-row-click="onRowClick" ></Table>
                 <div ref="pages" class="txt-right pt-20 pb-30">
-                    <Page :current="current" :total="total" size="small" show-elevator show-sizer :page-size="pagesize"></Page>
+                    <Page :current="current" :total="total" size="small" show-elevator show-sizer :page-size="pagesize"
+                    @on-change="onPageChange"
+                    @on-page-size-change="onPageSizeChange"></Page>
                 </div>
             </div>
             <sp-drawer title="新建表单" :closable="true" width="450" v-model="flag_createform">
@@ -90,6 +92,14 @@
                 this.$router.push( {
                     path: `/form/${row.c_id}`
                 } )
+            },
+            onPageChange ( pageindex ) {
+                this.current = pageindex
+                this.getFormList()
+            },
+            onPageSizeChange ( pagesize ) {
+                this.pagesize = pagesize
+                this.getFormList()
             },
             async getFormById () {
                 let result = await this.$http.get( '/getFormById', {

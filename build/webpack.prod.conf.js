@@ -32,7 +32,7 @@ module.exports = {
             // manifest: require( '../dist/dll/vue-manifest.json' ) // 动态链接
 
             context: __dirname,
-            manifest: require( '../dist/dll/vue-manifest.json' )
+            manifest: require( '../server/dist/dll/vue-manifest.json' )
         } ),
 
         new webpack.optimize.CommonsChunkPlugin( {
@@ -52,8 +52,8 @@ module.exports = {
             parallel: true, // 平行线程处理，加快压缩速度
             cache: true // 使用缓存，加快压缩速度
         } ),
-        new CleanWebpackPlugin( path.resolve( __dirname, '../dist' ), {
-            root: path.resolve( __dirname, '../../../' ), // 设置root
+        new CleanWebpackPlugin( path.resolve( __dirname, '../server/dist' ), {
+            root: path.resolve( __dirname, '../' ), // 设置root
             verbose: true, // 一个根的绝对路径
             exclude: ['dll'] // 排除不删除的目录，主要用于避免删除公用的文件
         } )

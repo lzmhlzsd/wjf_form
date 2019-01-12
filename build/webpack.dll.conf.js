@@ -2,7 +2,7 @@ const path = require( 'path' )
 const webpack = require( 'webpack' )
 
 const CleanWebpackPlugin = require( 'clean-webpack-plugin' )
-const outPath = '../dist/dll'
+const outPath = '../server/dist/dll'
 // const config = require( './config' )
 // const QnWebpack = require( 'qn-webpack' )
 
@@ -28,12 +28,12 @@ module.exports = {
             path: path.join( __dirname, outPath, '[name]-manifest.json' ),
             name: '[name]',
             context: __dirname
-        } ),
-
-        new CleanWebpackPlugin( path.resolve( __dirname, outPath ), {
-            root: path.resolve( __dirname, '../' ), // 设置root
-            verbose: true, // 一个根的绝对路径
-            exclude: [] // 排除不删除的目录，主要用于避免删除公用的文件
         } )
+
+        // new CleanWebpackPlugin( path.resolve( __dirname, outPath ), {
+        //     root: path.resolve( __dirname, '../server' ), // 设置root
+        //     verbose: true, // 一个根的绝对路径
+        //     exclude: [] // 排除不删除的目录，主要用于避免删除公用的文件
+        // } )
     ]
 }

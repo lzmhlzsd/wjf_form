@@ -52,7 +52,7 @@ function useAxios () {
     const axios = require( 'axios' )
     const qs = require( 'qs' )
 
-    axios.defaults.baseURL = '/api'
+    axios.defaults.baseURL = ''
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
     axios.interceptors.request.use( config => {
         console.log( config )

@@ -11,7 +11,9 @@
                 </Row>
                 <Table ref="table" :loading="loading" :columns="columns" :data="list" size="small"></Table>
                 <div ref="pages" class="txt-right pt-20 pb-30">
-                    <Page :current="current" :total="total" size="small" show-elevator show-sizer :page-size="pagesize"></Page>
+                    <Page :current="current" :total="total" size="small" show-elevator show-sizer :page-size="pagesize"
+                    @on-change="onPageChange"
+                    @on-page-size-change="onPageSizeChange"></Page>
                 </div>
             </div>
         </Content>
@@ -69,6 +71,14 @@
         methods: {
             goFormList () {
                 this.$router.go( -1 )
+            },
+            onPageChange ( pageindex ) {
+                this.current = pageindex
+                this.getFormData()
+            },
+            onPageSizeChange ( pagesize ) {
+                this.pagesize = pagesize
+                this.getFormData()
             },
             async getFormData () {
                 let result = await this.$http.post( '/getFormData', {
