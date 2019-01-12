@@ -1,0 +1,35 @@
+{
+    "presets": [
+        [
+            "env",
+            {
+                "targets": {
+                    "browsers": [
+                        "last 2 versions"
+                    ]
+                }
+            }
+        ],
+        "stage-3"
+    ],
+    "plugins": [
+        "transform-runtime",
+        [
+            "import",
+            {
+                "libraryName": "iview",
+                "libraryDirectory": "src/components",
+                "style": "css"
+            }
+        ],
+        [
+            "component",
+            [
+                {
+                    "libraryName": "mint-ui",
+                    "style": true
+                }
+            ]
+        ]
+    ]
+}
