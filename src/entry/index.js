@@ -26,7 +26,7 @@ Vue.use( shopexUi )
 useAxios()
 
 const router = new VueRouter( {
-    mode: 'history',
+    // mode: 'history',
     routes
 } )
 

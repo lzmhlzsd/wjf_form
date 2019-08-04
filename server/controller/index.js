@@ -28,6 +28,7 @@ module.exports = {
                 } )
                 tableFields.push( `creator_name varchar(64)` )
                 tableFields.push( `created_at varchar(64)` )
+                tableFields.push( `updater_name varchar(64)` )
                 tableFields.push( `updated_at varchar(64)` )
                 tableFields.push( `info_platform varchar(64)` )
                 tableFields.push( `info_os varchar(64)` )
