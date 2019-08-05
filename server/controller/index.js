@@ -1,6 +1,7 @@
 const request = require( './../libs/request' )
 const HELP = require( '../libs/help' )
 const logFile = '[controller/index]'
+const cField = require( './field' )
 module.exports = {
     // 查询
     async getFormById ( req, res ) {
@@ -20,33 +21,40 @@ module.exports = {
                 res.send( { ecode: -1, msg: '数据库已经存在该表单' } )
             } else {
                 // 创建表
-                let tableFields = ['id int(11) unsigned NOT NULL AUTO_INCREMENT', 'serial_number int(8)']
+                let tableFields = ['id int(11) unsigned NOT NULL AUTO_INCREMENT']
                 data.fields.forEach( m => {
                     for ( var item in m ) {
-                        tableFields.push( `${item} varchar(64)` )
+                        if ( cField.normal[m[item].type] ) {
+                            tableFields.push( `${item} ${cField.normal[m[item].type].type}` )
+                        } else {
+                            tableFields.push( `${item} varchar(64)` )
+                        }
                     }
                 } )
-                tableFields.push( `total_price float` )
-                tableFields.push( `trade_no varchar(64)` )
-                tableFields.push( `trade_status varchar(64)` )
-                tableFields.push( `payment_method varchar(64)` )
-                // 扩展字段
-                tableFields.push( `x_field_1 varchar(256)` )
-                tableFields.push( `x_field_weixin_nickname varchar(64)` )
-                tableFields.push( `x_field_weixin_gender varchar(16)` )
-                tableFields.push( `x_field_weixin_country varchar(128)` )
-                tableFields.push( `x_field_weixin_province_city varchar(128)` )
-                tableFields.push( `x_field_weixin_openid varchar(64)` )
-                tableFields.push( `x_field_weixin_headimgurl varchar(256)` )
-                //
-                tableFields.push( `creator_name varchar(64)` )
-                tableFields.push( `created_at varchar(64)` )
-                tableFields.push( `updater_name varchar(64)` )
-                tableFields.push( `updated_at varchar(64)` )
-                tableFields.push( `info_platform varchar(64)` )
-                tableFields.push( `info_os varchar(64)` )
-                tableFields.push( `info_browser varchar(64)` )
-                tableFields.push( `info_remote_ip varchar(64)` )
+                Object.keys( cField.extend ).forEach( item => {
+                    tableFields.push( `${item} ${cField.extend[item].type}` )
+                } )
+                // tableFields.push( `total_price float` )
+                // tableFields.push( `trade_no varchar(64)` )
+                // tableFields.push( `trade_status varchar(64)` )
+                // tableFields.push( `payment_method varchar(64)` )
+                // // 扩展字段type
+                // tableFields.push( `x_field_1 varchar(256)` )
+                // tableFields.push( `x_field_weixin_nickname varchar(64)` )
+                // tableFields.push( `x_field_weixin_gender varchar(16)` )
+                // tableFields.push( `x_field_weixin_country varchar(128)` )
+                // tableFields.push( `x_field_weixin_province_city varchar(128)` )
+                // tableFields.push( `x_field_weixin_openid varchar(64)` )
+                // tableFields.push( `x_field_weixin_headimgurl varchar(256)` )
+                // //
+                // tableFields.push( `creator_name varchar(64)` )
+                // tableFields.push( `created_at varchar(64)` )
+                // tableFields.push( `updater_name varchar(64)` )
+                // tableFields.push( `updated_at varchar(64)` )
+                // tableFields.push( `info_platform varchar(64)` )
+                // tableFields.push( `info_os varchar(64)` )
+                // tableFields.push( `info_browser varchar(64)` )
+                // tableFields.push( `info_remote_ip varchar(64)` )
                 tableFields.push( 'PRIMARY KEY (`id`)' )
                 const sql1 = `create table t_${formID} (${tableFields.join( ',' )})`
                 await HELP.sqlExecute( sql1 )
