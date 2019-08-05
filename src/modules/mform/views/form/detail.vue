@@ -113,6 +113,10 @@
                         }
                     } )
                     this.columns = this.columns.concat( [
+                        { title: '订单价格', key: 'total_price' },
+                        { title: '订单号', key: 'trade_no' },
+                        { title: '订单状态', key: 'trade_status' },
+                        { title: '支付方式', key: 'trade_payment_method' },
                         { title: '提交人', key: 'creator_name' },
                         { title: '提交时间', key: 'created_at' },
                         { title: '修改时间', key: 'updated_at' },
