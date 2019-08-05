@@ -29,7 +29,7 @@ module.exports = {
                 tableFields.push( `total_price float` )
                 tableFields.push( `trade_no varchar(64)` )
                 tableFields.push( `trade_status varchar(64)` )
-                tableFields.push( `trade_payment_method varchar(64)` )
+                tableFields.push( `payment_method varchar(64)` )
                 tableFields.push( `creator_name varchar(64)` )
                 tableFields.push( `created_at varchar(64)` )
                 tableFields.push( `updater_name varchar(64)` )
