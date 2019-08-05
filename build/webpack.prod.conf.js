@@ -41,17 +41,17 @@ module.exports = {
         } ),
 
         // js压缩
-        new webpack.optimize.UglifyJsPlugin(), // UglifyJsPlugin 支持平行打包压缩，提高速度
-        new UglifyJsPlugin( {
-            uglifyOptions: {
-                compress: {
-                    warnings: false
-                }
-            },
-            sourceMap: false, // 去掉sourceMap，加快压缩速度
-            parallel: true, // 平行线程处理，加快压缩速度
-            cache: true // 使用缓存，加快压缩速度
-        } ),
+        // new webpack.optimize.UglifyJsPlugin(), // UglifyJsPlugin 支持平行打包压缩，提高速度
+        // new UglifyJsPlugin( {
+        //     uglifyOptions: {
+        //         compress: {
+        //             warnings: false
+        //         }
+        //     },
+        //     sourceMap: false, // 去掉sourceMap，加快压缩速度
+        //     parallel: true, // 平行线程处理，加快压缩速度
+        //     cache: true // 使用缓存，加快压缩速度
+        // } ),
         new CleanWebpackPlugin( path.resolve( __dirname, '../server/dist' ), {
             root: path.resolve( __dirname, '../' ), // 设置root
             verbose: true, // 一个根的绝对路径

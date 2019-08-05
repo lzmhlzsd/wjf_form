@@ -63,7 +63,18 @@ module.exports = {
                 await HELP.sqlExecute( sql1 )
                 HELP.log( `${logFile} getFormById table t_${formID} created success`.green )
                 // 插入数据库
-                const sql2 = `insert into t_tables (c_id, c_name, c_content, c_desc) values ('${formID}', '${data.name}', '${JSON.stringify( data.fields ).replace( /\"/g, '\\"' )}', ${data.description === '' ? null : data.description})`
+                let d1 = JSON.stringify( data.fields )
+                let d2 = d1.replace( /\r\n/g, '' )
+                let d3 = d2.replace( /\\n/g, '' )
+                let d4 = d3.replace( /\s/g, '' )
+                let d5 = d4.replace( /\"/g, '\\"' )
+                const sql2 = `insert into t_tables (c_id, c_name, c_content, c_desc) values ('${formID}', '${
+                    data.name
+                }', '${d5}', ${
+                    data.description === ''
+                        ? null
+                        : data.description
+                })`
                 await HELP.sqlExecute( sql2 )
                 res.send( { ecode: 0, msg: '操作成功' } )
             }

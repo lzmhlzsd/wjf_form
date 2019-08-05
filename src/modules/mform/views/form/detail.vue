@@ -4,12 +4,10 @@
             <div ref="tcontent" class="tcontent p-10">
                 <Row ref="tools" class="pt-10 pb-10">
                     <Col span="12">
-                        <!-- <Input type="text" clearable v-model="keyword" placeholder="请输入表单ID或名称" style="width: 200px;"></Input>
-                        <Button type="primary" @click="getFormList">搜索</Button> -->
                         <Button type="primary" @click="goFormList">表单管理</Button>
                     </Col>
                 </Row>
-                <Table ref="table" :loading="loading" :columns="columns" :data="list" size="small"></Table>
+                <Table ref="table" width="100%" :loading="loading" :columns="columns" :data="list" size="small"></Table>
                 <div ref="pages" class="txt-right pt-20 pb-30">
                     <Page :current="current" :total="total" size="small" show-elevator show-sizer :page-size="pagesize"
                     @on-change="onPageChange"
@@ -108,23 +106,24 @@
                         for ( var item in m ) {
                             this.columns.push( {
                                 title: m[item].label,
-                                key: item
+                                key: item,
+                                width: 100
                             } )
                         }
                     } )
                     this.columns = this.columns.concat( [
-                        { title: '订单价格', key: 'total_price' },
-                        { title: '订单号', key: 'trade_no' },
-                        { title: '订单状态', key: 'trade_status' },
-                        { title: '支付方式', key: 'trade_payment_method' },
-                        { title: '创建人', key: 'creator_name' },
-                        { title: '创建时间', key: 'created_at' },
-                        { title: '修改人', key: 'updater_name' },
-                        { title: '修改时间', key: 'updated_at' },
-                        { title: '设备信息', key: 'info_platform' },
-                        { title: '操作系统', key: 'info_os' },
-                        { title: '浏览器', key: 'info_browser' },
-                        { title: 'IP', key: 'info_remote_ip' }
+                        { title: '订单价格', key: 'total_price', width: 100 },
+                        { title: '订单号', key: 'trade_no', width: 100 },
+                        { title: '订单状态', key: 'trade_status', width: 100 },
+                        { title: '支付方式', key: 'trade_payment_method', width: 100 },
+                        { title: '创建人', key: 'creator_name', width: 100 },
+                        { title: '创建时间', key: 'created_at', width: 100 },
+                        { title: '修改人', key: 'updater_name', width: 100 },
+                        { title: '修改时间', key: 'updated_at', width: 100 },
+                        { title: '设备信息', key: 'info_platform', width: 100 },
+                        { title: '操作系统', key: 'info_os', width: 100 },
+                        { title: '浏览器', key: 'info_browser', width: 100 },
+                        { title: 'IP', key: 'info_remote_ip', width: 100 }
                     ] )
                 }
                 this.getFormData()
