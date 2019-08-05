@@ -17,7 +17,7 @@ module.exports = {
     },
     extend: {
     // 扩展字段
-        serial_number: { title: '序号', type: 'varchar(32)' },
+        // serial_number: { title: '序号', type: 'varchar(32)' },
         total_price: { title: '订单价格', type: 'varchar(64)' },
         trade_no: { title: '订单号', type: 'varchar(64)' },
         trade_status: { title: '订单状态', type: 'varchar(32)' },
@@ -26,7 +26,7 @@ module.exports = {
         x_field_weixin_nickname: { title: '微信名称', type: 'varchar(32)' },
         x_field_weixin_gender: { title: '性别', type: 'varchar(8)' },
         x_field_weixin_country: { title: '国家', type: 'varchar(16)' },
-        x_field_weixin_province_city: { title: '省市区', type: 'varchar(32)' },
+        x_field_weixin_province_city: { title: '省市区', type: 'text' },
         x_field_weixin_openid: { title: 'openID', type: 'varchar(64)' },
         x_field_weixin_headimgurl: { title: '微信头像', type: 'text' },
         creator_name: { title: '创建人', type: 'varchar(32)' },

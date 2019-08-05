@@ -21,7 +21,10 @@ module.exports = {
                 res.send( { ecode: -1, msg: '数据库已经存在该表单' } )
             } else {
                 // 创建表
-                let tableFields = ['id int(11) unsigned NOT NULL AUTO_INCREMENT']
+                let tableFields = [
+                    'id int(11) unsigned NOT NULL AUTO_INCREMENT',
+                    'serial_number varchar(32) NOT NULL unique'
+                ]
                 data.fields.forEach( m => {
                     for ( var item in m ) {
                         if ( cField.normal[m[item].type] ) {
@@ -60,7 +63,7 @@ module.exports = {
                 await HELP.sqlExecute( sql1 )
                 HELP.log( `${logFile} getFormById table t_${formID} created success`.green )
                 // 插入数据库
-                const sql2 = `insert into t_tables (c_id, c_name, c_content, c_desc) values ('${formID}', '${data.name}', '${JSON.stringify( data.fields )}', ${data.description === '' ? null : data.description})`
+                const sql2 = `insert into t_tables (c_id, c_name, c_content, c_desc) values ('${formID}', '${data.name}', '${JSON.stringify( data.fields ).replace( /\"/g, '\\"' )}', ${data.description === '' ? null : data.description})`
                 await HELP.sqlExecute( sql2 )
                 res.send( { ecode: 0, msg: '操作成功' } )
             }
@@ -123,11 +126,15 @@ module.exports = {
             let tableValue = []
             for ( var item in entry ) {
                 tableField.push( `${item}` )
-                tableValue.push( `'${entry[item]}'` )
+                if ( entry[item] instanceof Object ) {
+                    tableValue.push( `'${JSON.stringify( entry[item] )}'` )
+                } else {
+                    tableValue.push( `'${entry[item]}'` )
+                }
             }
             const sql = `insert into t_${tableID} (${tableField}) values (${tableValue.join( ',' )})`
             await HELP.sqlExecute( sql )
-            res.send( { ecode: 0, msg: '操作成功' } )
+            res.send( 200 )
         } catch ( e ) {
             res.send( { ecode: -1, msg: '服务器异常' } )
             HELP.error( `${logFile} getFormById error: ${e.toString()}` )
