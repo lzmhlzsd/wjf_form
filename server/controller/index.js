@@ -30,7 +30,15 @@ module.exports = {
                 tableFields.push( `trade_no varchar(64)` )
                 tableFields.push( `trade_status varchar(64)` )
                 tableFields.push( `payment_method varchar(64)` )
+                // 扩展字段
                 tableFields.push( `x_field_1 varchar(256)` )
+                tableFields.push( `x_field_weixin_nickname varchar(64)` )
+                tableFields.push( `x_field_weixin_gender varchar(16)` )
+                tableFields.push( `x_field_weixin_country varchar(128)` )
+                tableFields.push( `x_field_weixin_province_city varchar(128)` )
+                tableFields.push( `x_field_weixin_openid varchar(64)` )
+                tableFields.push( `x_field_weixin_headimgurl varchar(256)` )
+                //
                 tableFields.push( `creator_name varchar(64)` )
                 tableFields.push( `created_at varchar(64)` )
                 tableFields.push( `updater_name varchar(64)` )
