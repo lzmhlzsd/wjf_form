@@ -12,6 +12,7 @@ module.exports = {
         // host: '127.0.0.1',
         user: 'root',
         password: '332847979lkj',
-        database: 'form'
+        database: 'form',
+        useConnectionPooling: true
     }
 }
