@@ -12,8 +12,8 @@ module.exports = {
                         if ( err ) {
                             reject( new Error( `sql: ${sql}, msg: ${err}` ) )
                         }
-                        resolve( result )
                         pool.release( client )
+                        resolve( result )
                     } )
                 } )
                 .catch( function ( err ) {
