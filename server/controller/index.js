@@ -102,7 +102,7 @@ module.exports = {
                 } } )
         } catch ( e ) {
             res.send( { ecode: -1, msg: '服务器异常' } )
-            HELP.error( `${logFile} getFormById error: ${e.toString()}` )
+            HELP.error( `${logFile} getFormList error: ${e.toString()}` )
         }
     },
     // 查询表单数据
@@ -125,7 +125,7 @@ module.exports = {
             } )
         } catch ( e ) {
             res.send( { ecode: -1, msg: '服务器异常' } )
-            HELP.error( `${logFile} getFormById error: ${e.toString()}` )
+            HELP.error( `${logFile} getFormData error: ${e.toString()}` )
         }
     },
     async postFormData ( req, res ) {
@@ -148,7 +148,7 @@ module.exports = {
             res.send( 200 )
         } catch ( e ) {
             res.send( { ecode: -1, msg: '服务器异常' } )
-            HELP.error( `${logFile} getFormById error: ${e.toString()}` )
+            HELP.error( `${logFile} postFormData error: ${e.toString()}` )
         }
     }
 }

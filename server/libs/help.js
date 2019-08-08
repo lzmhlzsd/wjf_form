@@ -5,19 +5,27 @@ const colors = require( 'colors' )
 module.exports = {
     sqlExecute: function ( sql ) {
         return new Promise( ( resolve, reject ) => {
-            var resourcePromise = pool.acquire()
+            var resourcePromise = pool
+                .acquire()
+                .then( function ( resource ) {
+                    console.log( 'resource' )
+                } )
+                .catch( function ( err ) {
+                    console.log( err )
+                    return pool.drain()
+                } )
             resourcePromise
                 .then( function ( client ) {
                     client.query( sql, null, function ( err, result ) {
-                        if ( err ) {
-                            reject( new Error( `sql: ${sql}, msg: ${err}` ) )
-                        }
                         pool.release( client )
+                        if ( err ) {
+                            reject( new Error( `client sql: ${sql}, msg: ${err}` ) )
+                        }
                         resolve( result )
                     } )
                 } )
                 .catch( function ( err ) {
-                    reject( new Error( `sql: ${sql}, msg: ${err}` ) )
+                    reject( new Error( `resourcePromise sql: ${sql}, msg: ${err}` ) )
                 } )
         } )
     },
