@@ -143,8 +143,14 @@ module.exports = {
                     tableValue.push( `'${entry[item]}'` )
                 }
             }
+            const sql1 = `select count(*) as count from t_${tableID} where serial_number = '%${entry.serial_number}%'`
             const sql = `insert into t_${tableID} (${tableField}) values (${tableValue.join( ',' )})`
-            await HELP.sqlExecute( sql )
+            const result1 = await HELP.sqlExecute( sql1 )
+
+            if ( result1[0].count === 0 ) {
+                await HELP.sqlExecute( sql )
+                HELP.log( `${logFile} postFormData success` )
+            }
             res.send( 200 )
         } catch ( e ) {
             res.send( { ecode: -1, msg: '服务器异常' } )
