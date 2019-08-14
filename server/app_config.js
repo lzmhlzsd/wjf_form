@@ -5,8 +5,10 @@ module.exports = {
     formUrl: 'https://ntmaimeng.jinshuju.com/api/v1/forms/',
     // appkey: 'c9I8bwNPdY5McXR7bdH02Q',
     // appScrect: 'SoIddEOCUMR9f8cFxk9rDA',
-    appkey: '1wItXhgeOEPChFwz5_HvFQ',
-    appScrect: 'a9hfNnJrzsf9xjYMNCF9Dg',
+    // appkey: '1wItXhgeOEPChFwz5_HvFQ',
+    // appScrect: 'a9hfNnJrzsf9xjYMNCF9Dg',
+    appkey: 'c9I8bwNPdY5McXR7bdH02Q',
+    appScrect: 'SoIddEOCUMR9f8cFxk9rDA',
     mysql: {
         host: '39.96.17.179',
         // host: '127.0.0.1',
