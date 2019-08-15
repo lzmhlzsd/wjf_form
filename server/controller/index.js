@@ -2,6 +2,7 @@ const request = require( './../libs/request' )
 const HELP = require( '../libs/help' )
 const logFile = '[controller/index]'
 const cField = require( './field' )
+const colors = require( 'colors' )
 module.exports = {
     // 查询
     async getFormById ( req, res ) {
@@ -70,11 +71,7 @@ module.exports = {
                 let d5 = d4.replace( /\"/g, '\\"' )
                 const sql2 = `insert into t_tables (c_id, c_name, c_content, c_desc) values ('${formID}', '${
                     data.name
-                }', '${d5}', ${
-                    data.description === ''
-                        ? null
-                        : data.description
-                })`
+                }', '${d5}', null)`
                 await HELP.sqlExecute( sql2 )
                 res.send( { ecode: 0, msg: '操作成功' } )
             }
