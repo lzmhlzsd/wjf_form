@@ -1,7 +1,7 @@
 const pool = require( './mysql' )
 const appConfig = require( '../app_config' )
 const moment = require( 'moment' )
-// const colors = require( 'colors' )
+const colors = require( 'colors' )
 module.exports = {
     sqlExecute: function ( sql ) {
         // return new Promise( ( resolve, reject ) => {

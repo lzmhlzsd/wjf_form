@@ -79,8 +79,8 @@ module.exports = {
                 res.send( { ecode: 0, msg: '操作成功' } )
             }
         } catch ( e ) {
-            res.send( { ecode: -1, msg: '服务器异常' } )
-            HELP.error( `${logFile} getFormById error: ${e.toString()}` )
+            HELP.error( `${logFile} getFormById error: ${e.message}` )
+            res.send( { ecode: -1, msg: e.message } )
         }
     },
     // 查询所有表单列表
@@ -101,8 +101,8 @@ module.exports = {
                     pageindex: req.body.pageindex
                 } } )
         } catch ( e ) {
-            res.send( { ecode: -1, msg: '服务器异常' } )
-            HELP.error( `${logFile} getFormList error: ${e.toString()}` )
+            HELP.error( `${logFile} getFormList error: ${e.message}` )
+            res.send( { ecode: -1, msg: e.message } )
         }
     },
     // 查询表单数据
@@ -124,8 +124,8 @@ module.exports = {
                 }
             } )
         } catch ( e ) {
-            res.send( { ecode: -1, msg: '服务器异常' } )
-            HELP.error( `${logFile} getFormData error: ${e.toString()}` )
+            HELP.error( `${logFile} getFormData error: ${e.message}` )
+            res.send( { ecode: -1, msg: e.message } )
         }
     },
     async postFormData ( req, res ) {
@@ -153,8 +153,8 @@ module.exports = {
             }
             res.send( 200 )
         } catch ( e ) {
-            res.send( { ecode: -1, msg: '服务器异常' } )
-            HELP.error( `${logFile} postFormData error: ${e.toString()}` )
+            HELP.error( `${logFile} postFormData error: ${e.message}` )
+            res.send( { ecode: -1, msg: e.message } )
         }
     }
 }
