@@ -146,7 +146,21 @@ module.exports = {
 
             if ( result1[0].count === 0 ) {
                 await HELP.sqlExecute( sql )
-                HELP.log( `${logFile} postFormData success` )
+                HELP.log( `${logFile} postFormData t_${tableID} insert success` )
+            } else {
+                let setArray = []
+                for ( var sitem in entry ) {
+                    if ( sitem !== 'serial_number' ) {
+                        if ( entry[sitem] instanceof Object ) {
+                            setArray.push( `${sitem} = '${JSON.stringify( entry[sitem] )}'` )
+                        } else {
+                            setArray.push( `${sitem} = '${entry[sitem]}'` )
+                        }
+                    }
+                }
+                const updatesql = `update t_${tableID} set ${setArray.join( ',' )} where serial_number = ${entry.serial_number}`
+                await HELP.sqlExecute( updatesql )
+                HELP.log( `${logFile} postFormData t_${tableID} update success` )
             }
             res.send( 200 )
         } catch ( e ) {
