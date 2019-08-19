@@ -140,7 +140,7 @@ module.exports = {
                     tableValue.push( `'${entry[item]}'` )
                 }
             }
-            const sql1 = `select count(*) as count from t_${tableID} where serial_number = '%${entry.serial_number}%'`
+            const sql1 = `select count(*) as count from t_${tableID} where serial_number = '${entry.serial_number}'`
             const sql = `insert into t_${tableID} (${tableField}) values (${tableValue.join( ',' )})`
             const result1 = await HELP.sqlExecute( sql1 )
             HELP.log( `result1: ${JSON.stringify( result1 )}` )
