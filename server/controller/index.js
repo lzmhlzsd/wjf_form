@@ -143,7 +143,7 @@ module.exports = {
             const sql1 = `select count(*) as count from t_${tableID} where serial_number = '%${entry.serial_number}%'`
             const sql = `insert into t_${tableID} (${tableField}) values (${tableValue.join( ',' )})`
             const result1 = await HELP.sqlExecute( sql1 )
-
+            HELP.log( `result1: ${result1}` )
             if ( result1[0].count === 0 ) {
                 await HELP.sqlExecute( sql )
                 HELP.log( `${logFile} postFormData t_${tableID} insert success` )
