@@ -159,6 +159,8 @@ module.exports = {
                     }
                 }
                 const updatesql = `update t_${tableID} set ${setArray.join( ',' )} where serial_number = ${entry.serial_number}`
+
+                HELP.log( updatesql )
                 await HELP.sqlExecute( updatesql )
                 HELP.log( `${logFile} postFormData t_${tableID} update success` )
             }
