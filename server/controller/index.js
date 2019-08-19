@@ -141,7 +141,9 @@ module.exports = {
                 }
             }
             const sql1 = `select count(*) as count from t_${tableID} where serial_number = '${entry.serial_number}'`
+            HELP.log( `${logFile} postFormData sql1: ${sql1}` )
             const sql = `insert into t_${tableID} (${tableField}) values (${tableValue.join( ',' )})`
+            HELP.log( `${logFile} postFormData sql: ${sql}` )
             const result1 = await HELP.sqlExecute( sql1 )
             HELP.log( `result1: ${JSON.stringify( result1 )}` )
             if ( result1[0].count === 0 ) {
@@ -160,7 +162,7 @@ module.exports = {
                 }
                 const updatesql = `update t_${tableID} set ${setArray.join( ',' )} where serial_number = ${entry.serial_number}`
 
-                HELP.log( updatesql )
+                HELP.log( `${logFile} postFormData sql: ${updatesql}` )
                 await HELP.sqlExecute( updatesql )
                 HELP.log( `${logFile} postFormData t_${tableID} update success` )
             }
