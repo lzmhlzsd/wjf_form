@@ -63,6 +63,24 @@ module.exports = {
                 const sql1 = `create table t_${formID} (${tableFields.join( ',' )})`
                 await HELP.sqlExecute( sql1 )
                 HELP.log( `${logFile} getFormById table t_${formID} created success`.green )
+
+                // 创建C表
+                // c表字段
+                let cTableFileds = [
+                    'varchar(11) g_c_name',
+                    'varchar(11) g_c_grade',
+                    'varchar(11) g_c_class',
+                    'varchar(11) g_c_sex',
+                    'varchar(32) g_c_school',
+                    'varchar(128) g_c_address',
+                    'varchar(64) g_c_room',
+                    'varchar(64) g_c_stuendId',
+                    'varchar(128) g_c_desc'
+                ]
+                const tsql = `create table t_${formID}_unio (${cTableFileds.join( ',' )}, ${tableFields.join( ',' )})`
+                await HELP.sqlExecute( tsql )
+                HELP.log( `${logFile} getFormById table t_${formID}_unio created success`.green )
+
                 // 插入数据库
                 let d1 = JSON.stringify( data.fields )
                 let d2 = d1.replace( /\r\n/g, '' )
@@ -146,9 +164,22 @@ module.exports = {
             HELP.log( `${logFile} postFormData sql: ${sql}` )
             const result1 = await HELP.sqlExecute( sql1 )
             HELP.log( `result1: ${JSON.stringify( result1 )}` )
+
+            let userResult = []
+            // 查询用户信息表信息
+            if ( entry.tsid ) {
+                const userSql = `select * from t_student where c_stuendId = ${entry.tsid}`
+                userResult = await HELP.sqlExecute( userSql )
+            }
+
             if ( result1[0].count === 0 ) {
                 await HELP.sqlExecute( sql )
                 HELP.log( `${logFile} postFormData t_${tableID} insert success` )
+
+                const unioSql = `insert into t_${tableID}_unio (g_c_name, g_c_grade, g_c_class, g_c_sex, g_c_school,
+                    g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField}) values (${userResult.join( ',' )}, ${tableValue.join( ',' )})`
+                await HELP.sqlExecute( unioSql )
+                HELP.log( `${logFile} postFormData t_${tableID}_unio insert success` )
             } else {
                 let setArray = []
                 for ( var sitem in entry ) {
@@ -165,7 +196,13 @@ module.exports = {
                 HELP.log( `${logFile} postFormData sql: ${updatesql}` )
                 await HELP.sqlExecute( updatesql )
                 HELP.log( `${logFile} postFormData t_${tableID} update success` )
+
+                const unioSql = `update into t_${tableID}_unio (g_c_name, g_c_grade, g_c_class, g_c_sex, g_c_school,
+                    g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField}) values (${userResult.join( ',' )}, ${tableValue.join( ',' )})`
+                await HELP.sqlExecute( unioSql )
+                HELP.log( `${logFile} postFormData t_${tableID}_unio update success` )
             }
+
             res.send( 200 )
         } catch ( e ) {
             HELP.error( `${logFile} postFormData error: ${e.message}` )
