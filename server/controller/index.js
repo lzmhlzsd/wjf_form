@@ -166,6 +166,7 @@ module.exports = {
             HELP.log( `result1: ${JSON.stringify( result1 )}` )
 
             let userResult = []
+            let userResultArray = []
             // 查询用户信息表信息
             // 特殊字段 学号
             HELP.log( `entry: ${JSON.stringify( entry )}` )
@@ -176,6 +177,18 @@ module.exports = {
                 }'`
                 userResult = await HELP.sqlExecute( userSql )
                 HELP.log( `userResult: ${JSON.stringify( userResult )}` )
+
+                userResultArray = [
+                    userResult[0].c_name,
+                    userResult[0].c_grade,
+                    userResult[0].c_class,
+                    userResult[0].c_sex,
+                    userResult[0].c_school,
+                    userResult[0].c_address,
+                    userResult[0].c_room,
+                    userResult[0].c_stuendId,
+                    userResult[0].c_desc
+                ]
             }
 
             if ( result1[0].count === 0 ) {
@@ -183,7 +196,7 @@ module.exports = {
                 HELP.log( `${logFile} postFormData t_${tableID} insert success` )
 
                 const unioSql = `insert into t_${tableID}_unio (g_c_name, g_c_grade, g_c_class, g_c_sex, g_c_school,
-                    g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField}) values (${userResult.join( ',' )}, ${tableValue.join( ',' )})`
+                    g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField}) values (${userResultArray.join( ',' )}, ${tableValue.join( ',' )})`
                 HELP.log( `unioSql Insert: ${unioSql}` )
                 await HELP.sqlExecute( unioSql )
                 HELP.log( `${logFile} postFormData t_${tableID}_unio insert success` )
@@ -205,7 +218,7 @@ module.exports = {
                 HELP.log( `${logFile} postFormData t_${tableID} update success` )
 
                 const unioSql = `update into t_${tableID}_unio (g_c_name, g_c_grade, g_c_class, g_c_sex, g_c_school,
-                    g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField}) values (${userResult.join( ',' )}, ${tableValue.join( ',' )})`
+                    g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField}) values (${userResultArray.join( ',' )}, ${tableValue.join( ',' )})`
                 HELP.log( `unioSql update: ${unioSql}` )
                 await HELP.sqlExecute( unioSql )
                 HELP.log( `${logFile} postFormData t_${tableID}_unio update success` )
