@@ -178,6 +178,7 @@ module.exports = {
 
                 const unioSql = `insert into t_${tableID}_unio (g_c_name, g_c_grade, g_c_class, g_c_sex, g_c_school,
                     g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField}) values (${userResult.join( ',' )}, ${tableValue.join( ',' )})`
+                HELP.log( `unioSql Insert: ${unioSql}` )
                 await HELP.sqlExecute( unioSql )
                 HELP.log( `${logFile} postFormData t_${tableID}_unio insert success` )
             } else {
@@ -199,6 +200,7 @@ module.exports = {
 
                 const unioSql = `update into t_${tableID}_unio (g_c_name, g_c_grade, g_c_class, g_c_sex, g_c_school,
                     g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField}) values (${userResult.join( ',' )}, ${tableValue.join( ',' )})`
+                HELP.log( `unioSql update: ${unioSql}` )
                 await HELP.sqlExecute( unioSql )
                 HELP.log( `${logFile} postFormData t_${tableID}_unio update success` )
             }
