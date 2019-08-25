@@ -67,15 +67,15 @@ module.exports = {
                 // 创建C表
                 // c表字段
                 let cTableFileds = [
-                    'varchar(11) g_c_name',
-                    'varchar(11) g_c_grade',
-                    'varchar(11) g_c_class',
-                    'varchar(11) g_c_sex',
-                    'varchar(32) g_c_school',
-                    'varchar(128) g_c_address',
-                    'varchar(64) g_c_room',
-                    'varchar(64) g_c_stuendId',
-                    'varchar(128) g_c_desc'
+                    'g_c_name varchar(11)',
+                    'g_c_grade varchar(11)',
+                    'g_c_class varchar(11)',
+                    'g_c_sex varchar(11)',
+                    'g_c_school varchar(32)',
+                    'g_c_address varchar(128)',
+                    'g_c_room varchar(64)',
+                    'g_c_stuendId varchar(64)',
+                    'g_c_desc varchar(128)'
                 ]
                 const tsql = `create table t_${formID}_unio (${cTableFileds.join( ',' )}, ${tableFields.join( ',' )})`
                 await HELP.sqlExecute( tsql )
