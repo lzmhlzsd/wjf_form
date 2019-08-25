@@ -170,8 +170,10 @@ module.exports = {
             // 特殊字段 学号
             HELP.log( `entry: ${JSON.stringify( entry )}` )
 
-            if ( entry.filed_10 ) {
-                const userSql = `select * from t_student where c_stuendId = '${entry.filed_10}'`
+            if ( entry.field_10 ) {
+                const userSql = `select * from t_student where c_stuendId = '${
+                    entry.field_10
+                }'`
                 userResult = await HELP.sqlExecute( userSql )
                 HELP.log( `userResult: ${JSON.stringify( userResult )}` )
             }
