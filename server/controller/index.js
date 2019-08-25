@@ -168,6 +168,8 @@ module.exports = {
             let userResult = []
             // 查询用户信息表信息
             // 特殊字段 学号
+            HELP.log( `entry: ${JSON.stringify( entry )}` )
+
             if ( entry.filed_10 ) {
                 const userSql = `select * from t_student where c_stuendId = '${entry.filed_10}'`
                 userResult = await HELP.sqlExecute( userSql )
