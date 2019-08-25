@@ -217,8 +217,19 @@ module.exports = {
                 await HELP.sqlExecute( updatesql )
                 HELP.log( `${logFile} postFormData t_${tableID} update success` )
 
-                const unioSql = `update into t_${tableID}_unio (g_c_name, g_c_grade, g_c_class, g_c_sex, g_c_school,
-                    g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField}) values (${userResultArray.join( ',' )}, ${tableValue.join( ',' )})`
+                let updateUserResultArray = [
+                    `g_c_name = '${userResult[0].c_name}'`,
+                    `g_c_grade = '${userResult[0].c_grade}'`,
+                    `g_c_class = '${userResult[0].c_class}'`,
+                    `g_c_sex = '${userResult[0].c_sex}'`,
+                    `g_c_school = '${userResult[0].c_school}'`,
+                    `g_c_address = '${userResult[0].c_address}'`,
+                    `g_c_room = '${userResult[0].c_room}'`,
+                    `g_c_stuendId = '${userResult[0].c_stuendId}'`,
+                    `g_c_desc = '${userResult[0].c_desc}'`
+                ]
+
+                const unioSql = `update t_${tableID}_unio set ${updateUserResultArray.join( ',' )},  ${setArray.join( ',' )} where serial_number = ${entry.serial_number}`
                 HELP.log( `unioSql update: ${unioSql}` )
                 await HELP.sqlExecute( unioSql )
                 HELP.log( `${logFile} postFormData t_${tableID}_unio update success` )
