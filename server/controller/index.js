@@ -179,15 +179,15 @@ module.exports = {
                 HELP.log( `userResult: ${JSON.stringify( userResult )}` )
 
                 userResultArray = [
-                    userResult[0].c_name,
-                    userResult[0].c_grade,
-                    userResult[0].c_class,
-                    userResult[0].c_sex,
-                    userResult[0].c_school,
-                    userResult[0].c_address,
-                    userResult[0].c_room,
-                    userResult[0].c_stuendId,
-                    userResult[0].c_desc
+                    `'${userResult[0].c_name}'`,
+                    `'${userResult[0].c_grade}'`,
+                    `'${userResult[0].c_class}'`,
+                    `'${userResult[0].c_sex}'`,
+                    `'${userResult[0].c_school}'`,
+                    `'${userResult[0].c_address}'`,
+                    `'${userResult[0].c_room}'`,
+                    `'${userResult[0].c_stuendId}'`,
+                    `'${userResult[0].c_desc}'`
                 ]
             }
 
