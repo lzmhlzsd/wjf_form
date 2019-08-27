@@ -191,6 +191,18 @@ module.exports = {
                     `'${userResult[0].c_stuendId}'`,
                     `'${userResult[0].c_desc}'`
                 ]
+            } else {
+                userResultArray = [
+                    ``,
+                    ``,
+                    ``,
+                    ``,
+                    ``,
+                    ``,
+                    ``,
+                    ``,
+                    ``
+                ]
             }
 
             let saleResult = []
@@ -209,6 +221,17 @@ module.exports = {
                     `'${saleResult[0].field_12}'`,
                     `'${saleResult[0].field_14}'`,
                     `'${saleResult[0].field_10}'`
+                ]
+            } else {
+                saleResultArray = [
+                    ``,
+                    ``,
+                    ``,
+                    ``,
+                    ``,
+                    ``,
+                    ``,
+                    ``
                 ]
             }
 
