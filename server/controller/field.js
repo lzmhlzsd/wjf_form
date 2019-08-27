@@ -17,7 +17,8 @@ module.exports = {
     },
     extend: {
     // 扩展字段
-        // serial_number: { title: '序号', type: 'varchar(32)' },
+    // serial_number: { title: '序号', type: 'varchar(32)' },
+        gen_code: { title: '兑换码', type: 'varchar(64)' },
         total_price: { title: '订单价格', type: 'varchar(64)' },
         trade_no: { title: '订单号', type: 'varchar(64)' },
         trade_status: { title: '订单状态', type: 'varchar(32)' },

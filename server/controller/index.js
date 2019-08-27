@@ -156,6 +156,7 @@ module.exports = {
                     tableValue.push( `'${JSON.stringify( entry[item] )}'` )
                 } else {
                     if ( HELP.isdatetime( entry[item] ) ) {
+                        HELP.log( `${logFile} postFormData datetime ${item}: ${entry[item]}` )
                         tableValue.push( `'${moment( entry[item] ).format( 'YYYY-MM-DD HH:mm:ss' )}'` )
                     } else {
                         tableValue.push( `'${entry[item]}'` )
@@ -218,9 +219,9 @@ module.exports = {
                     g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField},
                     s_c_leader, s_c_name, s_c_school, s_c_grade, s_c_phone, s_c_qq, s_c_type, s_c_recode) values
                     (${userResultArray.join( ',' )}, ${tableValue.join( ',' )}, ${saleResultArray.join( ',' )})`
-                HELP.log( `unioSql Insert: ${unioSql}` )
+                HELP.log( `unioSql Insert: ${unioSql}`.yellow )
                 await HELP.sqlExecute( unioSql )
-                HELP.log( `${logFile} postFormData t_${tableID}_unio insert success` )
+                HELP.log( `${logFile} postFormData t_${tableID}_unio insert success`.green )
             } else {
                 let setArray = []
                 for ( var sitem in entry ) {
@@ -262,13 +263,13 @@ module.exports = {
                 ]
 
                 const unioSql = `update t_${tableID}_unio set ${updateUserResultArray.join( ',' )},  ${setArray.join( ',' )}, ${updateSaleResultArray.join( ',' )} where serial_number = ${entry.serial_number}`
-                HELP.log( `unioSql update: ${unioSql}` )
+                HELP.log( `unioSql update: ${unioSql}`.yellow )
                 await HELP.sqlExecute( unioSql )
-                HELP.log( `${logFile} postFormData t_${tableID}_unio update success` )
+                HELP.log( `${logFile} postFormData t_${tableID}_unio update success`.green )
             }
             res.send( 200 )
         } catch ( e ) {
-            HELP.error( `${logFile} postFormData error: ${e.message}` )
+            HELP.error( `${logFile} postFormData error: ${e.message}`.red )
             res.send( { ecode: -1, msg: e.message } )
         }
     }
