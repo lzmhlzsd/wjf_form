@@ -24,48 +24,34 @@ module.exports = {
                 // 创建表
                 let tableFields = [
                     'id int(11) unsigned NOT NULL AUTO_INCREMENT',
-                    'serial_number varchar(32) NOT NULL unique'
+                    'serial_number varchar(32) NOT NULL unique',
+                    'field_1 varchar(32)',
+                    'field_2 varchar(32)',
+                    'field_3 varchar(32)',
+                    'field_4 varchar(32)'
                 ]
                 data.fields.forEach( m => {
                     for ( var item in m ) {
-                        if ( cField.normal[m[item].type] ) {
-                            tableFields.push( `${item} ${cField.normal[m[item].type].type}` )
-                        } else {
-                            tableFields.push( `${item} varchar(64)` )
+                        if ( ['field_1', 'field_2', 'field_3', 'field_4'].indexOf( item ) < 0 ) {
+                            if ( cField.normal[m[item].type] ) {
+                                tableFields.push( `${item} ${cField.normal[m[item].type].type}` )
+                            } else {
+                                tableFields.push( `${item} varchar(64)` )
+                            }
                         }
                     }
                 } )
+                // 扩展字段
                 Object.keys( cField.extend ).forEach( item => {
                     tableFields.push( `${item} ${cField.extend[item].type}` )
                 } )
-                // tableFields.push( `total_price float` )
-                // tableFields.push( `trade_no varchar(64)` )
-                // tableFields.push( `trade_status varchar(64)` )
-                // tableFields.push( `payment_method varchar(64)` )
-                // // 扩展字段type
-                // tableFields.push( `x_field_1 varchar(256)` )
-                // tableFields.push( `x_field_weixin_nickname varchar(64)` )
-                // tableFields.push( `x_field_weixin_gender varchar(16)` )
-                // tableFields.push( `x_field_weixin_country varchar(128)` )
-                // tableFields.push( `x_field_weixin_province_city varchar(128)` )
-                // tableFields.push( `x_field_weixin_openid varchar(64)` )
-                // tableFields.push( `x_field_weixin_headimgurl varchar(256)` )
-                // //
-                // tableFields.push( `creator_name varchar(64)` )
-                // tableFields.push( `created_at varchar(64)` )
-                // tableFields.push( `updater_name varchar(64)` )
-                // tableFields.push( `updated_at varchar(64)` )
-                // tableFields.push( `info_platform varchar(64)` )
-                // tableFields.push( `info_os varchar(64)` )
-                // tableFields.push( `info_browser varchar(64)` )
-                // tableFields.push( `info_remote_ip varchar(64)` )
-                tableFields.push( 'PRIMARY KEY (`id`)' )
-                const sql1 = `create table t_${formID} (${tableFields.join( ',' )})`
-                await HELP.sqlExecute( sql1 )
-                HELP.log( `${logFile} getFormById table t_${formID} created success`.green )
 
-                // 创建C表
-                // c表字段
+                tableFields.push( 'PRIMARY KEY (`id`)' )
+                // const sql1 = `create table t_${formID} (${tableFields.join( ',' )})`
+                // await HELP.sqlExecute( sql1 )
+                // HELP.log( `${logFile} getFormById table t_${formID} created success`.green )
+
+                // 用户表字段
                 let cTableFileds = [
                     'g_c_name varchar(11)',
                     'g_c_grade varchar(11)',
@@ -77,7 +63,20 @@ module.exports = {
                     'g_c_stuendId varchar(64)',
                     'g_c_desc varchar(128)'
                 ]
-                const tsql = `create table t_${formID}_unio (${cTableFileds.join( ',' )}, ${tableFields.join( ',' )})`
+
+                // 销售表字段
+                let saleFileds = [
+                    's_c_leader varchar(16)',
+                    's_c_name varchar(16)',
+                    's_c_school varchar(32)',
+                    's_c_grade varchar(11)',
+                    's_c_phone varchar(11)',
+                    's_c_qq varchar(16)',
+                    's_c_type varchar(32)',
+                    's_c_recode varchar(32)'
+                ]
+
+                const tsql = `create table t_${formID}_unio (${cTableFileds.join( ',' )}, ${tableFields.join( ',' )}, ${saleFileds.join( ',' )})`
                 await HELP.sqlExecute( tsql )
                 HELP.log( `${logFile} getFormById table t_${formID}_unio created success`.green )
 
@@ -158,23 +157,20 @@ module.exports = {
                     tableValue.push( `'${entry[item]}'` )
                 }
             }
-            const sql1 = `select count(*) as count from t_${tableID} where serial_number = '${entry.serial_number}'`
-            HELP.log( `${logFile} postFormData sql1: ${sql1}` )
-            const sql = `insert into t_${tableID} (${tableField}) values (${tableValue.join( ',' )})`
-            HELP.log( `${logFile} postFormData sql: ${sql}` )
+            const sql1 = `select count(*) as count from t_${tableID}_unio where serial_number = '${entry.serial_number}'`
+            HELP.log( `${logFile} postFormData sql is: ${sql1}` )
+            // const sql = `insert into t_${tableID} (${tableField}) values (${tableValue.join( ',' )})`
+            // HELP.log( `${logFile} postFormData sql: ${sql}` )
             const result1 = await HELP.sqlExecute( sql1 )
-            HELP.log( `result1: ${JSON.stringify( result1 )}` )
+            HELP.log( `select t_${tableID}_unio count: ${JSON.stringify( result1 )}` )
 
             let userResult = []
             let userResultArray = []
-            // 查询用户信息表信息
-            // 特殊字段 学号
-            HELP.log( `entry: ${JSON.stringify( entry )}` )
 
-            if ( entry.field_10 ) {
-                const userSql = `select * from t_student where c_stuendId = '${
-                    entry.field_10
-                }'`
+            // HELP.log( `entry: ${JSON.stringify( entry )}` )
+            //
+            if ( entry.field_1 ) {
+                const userSql = `select * from t_student where c_stuendId = '${entry.field_2}'`
                 userResult = await HELP.sqlExecute( userSql )
                 HELP.log( `userResult: ${JSON.stringify( userResult )}` )
 
@@ -191,12 +187,33 @@ module.exports = {
                 ]
             }
 
-            if ( result1[0].count === 0 ) {
-                await HELP.sqlExecute( sql )
-                HELP.log( `${logFile} postFormData t_${tableID} insert success` )
+            let saleResult = []
+            let saleResultArray = []
+            if ( entry.field_3 ) {
+                const userSql = `select * from t_sale where field_4 = '${entry.field_4}'`
+                saleResult = await HELP.sqlExecute( userSql )
+                HELP.log( `saleResult: ${JSON.stringify( saleResult )}` )
 
+                saleResultArray = [
+                    `'${saleResult[0].field_19}'`,
+                    `'${saleResult[0].field_1}'`,
+                    `'${saleResult[0].field_2}'`,
+                    `'${saleResult[0].field_3}'`,
+                    `'${saleResult[0].field_4}'`,
+                    `'${saleResult[0].c_address}'`,
+                    `'${saleResult[0].field_12}'`,
+                    `'${saleResult[0].field_14}'`,
+                    `'${saleResult[0].field_10}'`
+                ]
+            }
+
+            if ( result1[0].count === 0 ) {
+                // await HELP.sqlExecute( sql )
+                // HELP.log( `${logFile} postFormData t_${tableID} insert success` )
                 const unioSql = `insert into t_${tableID}_unio (g_c_name, g_c_grade, g_c_class, g_c_sex, g_c_school,
-                    g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField}) values (${userResultArray.join( ',' )}, ${tableValue.join( ',' )})`
+                    g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField},
+                    s_c_leader, s_c_name, s_c_school, s_c_grade, s_c_phone, s_c_qq, s_c_type, s_c_recode) values
+                    (${userResultArray.join( ',' )}, ${tableValue.join( ',' )}, ${saleResultArray.join( ',' )})`
                 HELP.log( `unioSql Insert: ${unioSql}` )
                 await HELP.sqlExecute( unioSql )
                 HELP.log( `${logFile} postFormData t_${tableID}_unio insert success` )
@@ -211,11 +228,11 @@ module.exports = {
                         }
                     }
                 }
-                const updatesql = `update t_${tableID} set ${setArray.join( ',' )} where serial_number = ${entry.serial_number}`
+                // const updatesql = `update t_${tableID} set ${setArray.join( ',' )} where serial_number = ${entry.serial_number}`
 
-                HELP.log( `${logFile} postFormData sql: ${updatesql}` )
-                await HELP.sqlExecute( updatesql )
-                HELP.log( `${logFile} postFormData t_${tableID} update success` )
+                // HELP.log( `${logFile} postFormData sql: ${updatesql}` )
+                // await HELP.sqlExecute( updatesql )
+                // HELP.log( `${logFile} postFormData t_${tableID} update success` )
 
                 let updateUserResultArray = [
                     `g_c_name = '${userResult[0].c_name}'`,
@@ -229,12 +246,22 @@ module.exports = {
                     `g_c_desc = '${userResult[0].c_desc}'`
                 ]
 
-                const unioSql = `update t_${tableID}_unio set ${updateUserResultArray.join( ',' )},  ${setArray.join( ',' )} where serial_number = ${entry.serial_number}`
+                let updateSaleResultArray = [
+                    `s_c_leader = '${userResult[0].s_c_leader}'`,
+                    `s_c_name = '${userResult[0].s_c_name}'`,
+                    `s_c_school = '${userResult[0].s_c_school}'`,
+                    `s_c_grade = '${userResult[0].s_c_grade}'`,
+                    `s_c_phone = '${userResult[0].s_c_phone}'`,
+                    `s_c_qq = '${userResult[0].s_c_qq}'`,
+                    `s_c_type = '${userResult[0].s_c_type}'`,
+                    `s_c_recode = '${userResult[0].s_c_recode}'`
+                ]
+
+                const unioSql = `update t_${tableID}_unio set ${updateUserResultArray.join( ',' )},  ${setArray.join( ',' )}, ${updateSaleResultArray.join( ',' )} where serial_number = ${entry.serial_number}`
                 HELP.log( `unioSql update: ${unioSql}` )
                 await HELP.sqlExecute( unioSql )
                 HELP.log( `${logFile} postFormData t_${tableID}_unio update success` )
             }
-
             res.send( 200 )
         } catch ( e ) {
             HELP.error( `${logFile} postFormData error: ${e.message}` )
