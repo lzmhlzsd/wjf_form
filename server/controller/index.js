@@ -155,7 +155,7 @@ module.exports = {
                 if ( entry[item] instanceof Object ) {
                     tableValue.push( `'${JSON.stringify( entry[item] )}'` )
                 } else {
-                    if ( HELP.isdatetime( entry[item] ) ) {
+                    if ( HELP.isdatetime( entry[item] ) && item != 'info_os' ) {
                         HELP.log( `${logFile} postFormData datetime ${item}: ${entry[item]}` )
                         tableValue.push( `'${moment( entry[item] ).format( 'YYYY-MM-DD HH:mm:ss' )}'` )
                     } else {
@@ -229,7 +229,13 @@ module.exports = {
                         if ( entry[sitem] instanceof Object ) {
                             setArray.push( `${sitem} = '${JSON.stringify( entry[sitem] )}'` )
                         } else {
-                            setArray.push( `${sitem} = '${entry[sitem]}'` )
+                            // setArray.push( `${sitem} = '${entry[sitem]}'` )
+                            if ( HELP.isdatetime( entry[item] ) && item != 'info_os' ) {
+                                HELP.log( `${logFile} postFormData datetime ${item}: ${entry[item]}` )
+                                setArray.push( `${sitem} = '${moment( entry[item] ).format( 'YYYY-MM-DD HH:mm:ss' )}'` )
+                            } else {
+                                setArray.push( `${sitem} = '${entry[item]}'` )
+                            }
                         }
                     }
                 }
