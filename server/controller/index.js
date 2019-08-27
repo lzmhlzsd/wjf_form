@@ -3,6 +3,7 @@ const HELP = require( '../libs/help' )
 const logFile = '[controller/index]'
 const cField = require( './field' )
 const colors = require( 'colors' )
+const moment = require( 'moment' )
 module.exports = {
     // 查询
     async getFormById ( req, res ) {
@@ -17,7 +18,7 @@ module.exports = {
             // 查询数据库中是否已经存在该表单
             const sql = `select * from t_tables where c_id='${formID}'`
             let result = await HELP.sqlExecute( sql )
-            HELP.log( `${logFile} getFormById sql search result: ${result}` )
+            HELP.log( `${logFile} getFormById sql search result: ${JSON.stringify( result )}` )
             if ( result.length > 0 ) {
                 res.send( { ecode: -1, msg: '数据库已经存在该表单' } )
             } else {
@@ -154,7 +155,11 @@ module.exports = {
                 if ( entry[item] instanceof Object ) {
                     tableValue.push( `'${JSON.stringify( entry[item] )}'` )
                 } else {
-                    tableValue.push( `'${entry[item]}'` )
+                    if ( HELP.isdatetime( entry[item] ) ) {
+                        tableValue.push( `'${moment( entry[item] ).format( 'YYYY-MM-DD HH:mm:ss' )}'` )
+                    } else {
+                        tableValue.push( `'${entry[item]}'` )
+                    }
                 }
             }
             const sql1 = `select count(*) as count from t_${tableID}_unio where serial_number = '${entry.serial_number}'`
@@ -200,7 +205,6 @@ module.exports = {
                     `'${saleResult[0].field_2}'`,
                     `'${saleResult[0].field_3}'`,
                     `'${saleResult[0].field_4}'`,
-                    `'${saleResult[0].c_address}'`,
                     `'${saleResult[0].field_12}'`,
                     `'${saleResult[0].field_14}'`,
                     `'${saleResult[0].field_10}'`

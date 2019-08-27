@@ -47,5 +47,12 @@ module.exports = {
     },
     createID: function ( id ) {
         return id.replace( /-/g, '' ).substring( 0, 10 )
+    },
+    isdatetime ( data ) {
+        if ( isNaN( data ) && !isNaN( Date.parse( data ) ) ) {
+            return true
+        } else {
+            return true
+        }
     }
 }
