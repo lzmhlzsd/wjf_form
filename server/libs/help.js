@@ -52,7 +52,7 @@ module.exports = {
         if ( isNaN( data ) && !isNaN( Date.parse( data ) ) ) {
             return true
         } else {
-            return true
+            return false
         }
     }
 }
