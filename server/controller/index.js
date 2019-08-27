@@ -230,11 +230,11 @@ module.exports = {
                             setArray.push( `${sitem} = '${JSON.stringify( entry[sitem] )}'` )
                         } else {
                             // setArray.push( `${sitem} = '${entry[sitem]}'` )
-                            if ( HELP.isdatetime( entry[item] ) && item != 'info_os' ) {
-                                HELP.log( `${logFile} postFormData datetime ${item}: ${entry[item]}` )
-                                setArray.push( `${sitem} = '${moment( entry[item] ).format( 'YYYY-MM-DD HH:mm:ss' )}'` )
+                            if ( HELP.isdatetime( entry[sitem] ) && sitem != 'info_os' ) {
+                                HELP.log( `${logFile} postFormData datetime ${sitem}: ${entry[sitem]}` )
+                                setArray.push( `${sitem} = '${moment( entry[sitem] ).format( 'YYYY-MM-DD HH:mm:ss' )}'` )
                             } else {
-                                setArray.push( `${sitem} = '${entry[item]}'` )
+                                setArray.push( `${sitem} = '${entry[sitem]}'` )
                             }
                         }
                     }
