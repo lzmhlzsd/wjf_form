@@ -258,14 +258,14 @@ module.exports = {
                 ]
 
                 let updateSaleResultArray = [
-                    `s_c_leader = '${saleResult[0].s_c_leader}'`,
-                    `s_c_name = '${saleResult[0].s_c_name}'`,
-                    `s_c_school = '${saleResult[0].s_c_school}'`,
-                    `s_c_grade = '${saleResult[0].s_c_grade}'`,
-                    `s_c_phone = '${saleResult[0].s_c_phone}'`,
-                    `s_c_qq = '${saleResult[0].s_c_qq}'`,
-                    `s_c_type = '${saleResult[0].s_c_type}'`,
-                    `s_c_recode = '${saleResult[0].s_c_recode}'`
+                    `s_c_leader = '${saleResult[0].field_19}'`,
+                    `s_c_name = '${saleResult[0].field_1}'`,
+                    `s_c_school = '${saleResult[0].field_2}'`,
+                    `s_c_grade = '${saleResult[0].field_3}'`,
+                    `s_c_phone = '${saleResult[0].field_4}'`,
+                    `s_c_qq = '${saleResult[0].field_12}'`,
+                    `s_c_type = '${saleResult[0].field_14}'`,
+                    `s_c_recode = '${saleResult[0].field_10}'`
                 ]
 
                 const unioSql = `update t_${tableID}_unio set ${updateUserResultArray.join( ',' )},  ${setArray.join( ',' )}, ${updateSaleResultArray.join( ',' )} where serial_number = ${entry.serial_number}`
