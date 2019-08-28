@@ -340,7 +340,7 @@ module.exports = {
             )
 
             if ( result1[0].count === 0 ) {
-                const unioSql = `insert into t_${tableID} (${tableField}) values(${tableValue.join( ',' )}})`
+                const unioSql = `insert into t_${tableID} (${tableField}) values(${tableValue.join( ',' )})`
                 HELP.log( `unioSql Insert: ${unioSql}`.yellow )
                 await HELP.sqlExecute( unioSql )
                 HELP.log( `${logFile} postFromDataSale t_${tableID} insert success`.green )
