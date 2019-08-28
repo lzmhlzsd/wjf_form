@@ -296,26 +296,26 @@ module.exports = {
                 // HELP.log( `${logFile} postFormData t_${tableID} update success` )
 
                 let updateUserResultArray = [
-                    `g_c_name = '${userResult[0].c_name ? userResult[0].c_name : ''}' }'`,
-                    `g_c_grade = '${userResult[0].c_grade ? userResult[0].c_grade : ''}'`,
-                    `g_c_class = '${userResult[0].c_class ? userResult[0].c_class : ''}'`,
-                    `g_c_sex = '${userResult[0].c_sex ? userResult[0].c_sex : ''}'`,
-                    `g_c_school = '${userResult[0].c_school ? userResult[0].c_school : ''}'`,
-                    `g_c_address = '${userResult[0].c_address ? userResult[0].c_address : ''}'`,
-                    `g_c_room = '${userResult[0].c_room ? userResult[0].c_room : ''}'`,
-                    `g_c_stuendId = '${userResult[0].c_stuendId ? userResult[0].c_stuendId : ''}'`,
-                    `g_c_desc = '${userResult[0].c_desc ? userResult[0].c_desc : ''}'`
+                    `g_c_name = '${userResult.length > 0 ? userResult[0].c_name : ''}' }'`,
+                    `g_c_grade = '${userResult.length > 0 ? userResult[0].c_grade : ''}'`,
+                    `g_c_class = '${userResult.length > 0 ? userResult[0].c_class : ''}'`,
+                    `g_c_sex = '${userResult.length > 0 ? userResult[0].c_sex : ''}'`,
+                    `g_c_school = '${userResult.length > 0 ? userResult[0].c_school : ''}'`,
+                    `g_c_address = '${userResult.length > 0 ? userResult[0].c_address : ''}'`,
+                    `g_c_room = '${userResult.length > 0 ? userResult[0].c_room : ''}'`,
+                    `g_c_stuendId = '${userResult.length > 0 ? userResult[0].c_stuendId : ''}'`,
+                    `g_c_desc = '${userResult.length > 0 ? userResult[0].c_desc : ''}'`
                 ]
 
                 let updateSaleResultArray = [
-                    `s_c_leader = '${saleResult[0].field_19 ? userResult[0].field_19 : ''}'`,
-                    `s_c_name = '${saleResult[0].field_1 ? userResult[0].field_1 : ''}'`,
-                    `s_c_school = '${saleResult[0].field_2 ? userResult[0].field_2 : ''}'`,
-                    `s_c_grade = '${saleResult[0].field_3 ? userResult[0].field_3 : ''}'`,
-                    `s_c_phone = '${saleResult[0].field_4 ? userResult[0].field_4 : ''}'`,
-                    `s_c_qq = '${saleResult[0].field_12 ? userResult[0].field_12 : ''}'`,
-                    `s_c_type = '${saleResult[0].field_14 ? userResult[0].field_14 : ''}'`,
-                    `s_c_recode = '${saleResult[0].field_10 ? userResult[0].field_10 : ''}'`
+                    `s_c_leader = '${saleResult.length > 0 ? userResult[0].field_19 : ''}'`,
+                    `s_c_name = '${saleResult.length > 0 ? userResult[0].field_1 : ''}'`,
+                    `s_c_school = '${saleResult.length > 0 ? userResult[0].field_2 : ''}'`,
+                    `s_c_grade = '${saleResult.length > 0 ? userResult[0].field_3 : ''}'`,
+                    `s_c_phone = '${saleResult.length > 0 ? userResult[0].field_4 : ''}'`,
+                    `s_c_qq = '${saleResult.length > 0 ? userResult[0].field_12 : ''}'`,
+                    `s_c_type = '${saleResult.length > 0 ? userResult[0].field_14 : ''}'`,
+                    `s_c_recode = '${saleResult.length > 0 ? userResult[0].field_10 : ''}'`
                 ]
 
                 const unioSql = `update t_${tableID}_unio set ${updateUserResultArray.join( ',' )},  ${setArray.join( ',' )}, ${updateSaleResultArray.join( ',' )} where serial_number = ${entry.serial_number}`
