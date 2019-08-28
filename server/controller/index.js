@@ -178,19 +178,34 @@ module.exports = {
             if ( entry.field_1 ) {
                 const userSql = `select * from t_student where c_stuendId = '${entry.field_2}'`
                 userResult = await HELP.sqlExecute( userSql )
+                HELP.log( `userSql: ${userSql}`.yellow )
                 HELP.log( `userResult: ${JSON.stringify( userResult )}` )
 
-                userResultArray = [
-                    `'${userResult[0].c_name}'`,
-                    `'${userResult[0].c_grade}'`,
-                    `'${userResult[0].c_class}'`,
-                    `'${userResult[0].c_sex}'`,
-                    `'${userResult[0].c_school}'`,
-                    `'${userResult[0].c_address}'`,
-                    `'${userResult[0].c_room}'`,
-                    `'${userResult[0].c_stuendId}'`,
-                    `'${userResult[0].c_desc}'`
-                ]
+                if ( userResult.length > 0 ) {
+                    userResultArray = [
+                        `'${userResult[0].c_name}'`,
+                        `'${userResult[0].c_grade}'`,
+                        `'${userResult[0].c_class}'`,
+                        `'${userResult[0].c_sex}'`,
+                        `'${userResult[0].c_school}'`,
+                        `'${userResult[0].c_address}'`,
+                        `'${userResult[0].c_room}'`,
+                        `'${userResult[0].c_stuendId}'`,
+                        `'${userResult[0].c_desc}'`
+                    ]
+                } else {
+                    userResultArray = [
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`
+                    ]
+                }
             } else {
                 userResultArray = [
                     `''`,
@@ -208,20 +223,34 @@ module.exports = {
             let saleResult = []
             let saleResultArray = []
             if ( entry.field_3 ) {
-                const userSql = `select * from t_6MC9hz where field_4 = '${entry.field_4}'`
-                saleResult = await HELP.sqlExecute( userSql )
+                const saleSql = `select * from t_6MC9hz where field_4 = '${entry.field_4}'`
+                saleResult = await HELP.sqlExecute( saleSql )
+                HELP.log( `saleSql: ${saleSql}`.yellow )
                 HELP.log( `saleResult: ${JSON.stringify( saleResult )}` )
 
-                saleResultArray = [
-                    `'${saleResult[0].field_19}'`,
-                    `'${saleResult[0].field_1}'`,
-                    `'${saleResult[0].field_2}'`,
-                    `'${saleResult[0].field_3}'`,
-                    `'${saleResult[0].field_4}'`,
-                    `'${saleResult[0].field_12}'`,
-                    `'${saleResult[0].field_14}'`,
-                    `'${saleResult[0].field_10}'`
-                ]
+                if ( saleResult.length > 0 ) {
+                    saleResultArray = [
+                        `'${saleResult[0].field_19}'`,
+                        `'${saleResult[0].field_1}'`,
+                        `'${saleResult[0].field_2}'`,
+                        `'${saleResult[0].field_3}'`,
+                        `'${saleResult[0].field_4}'`,
+                        `'${saleResult[0].field_12}'`,
+                        `'${saleResult[0].field_14}'`,
+                        `'${saleResult[0].field_10}'`
+                    ]
+                } else {
+                    saleResultArray = [
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`,
+                        `''`
+                    ]
+                }
             } else {
                 saleResultArray = [
                     `''`,
