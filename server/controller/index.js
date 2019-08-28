@@ -208,7 +208,7 @@ module.exports = {
             let saleResult = []
             let saleResultArray = []
             if ( entry.field_3 ) {
-                const userSql = `select * from t_sale where field_4 = '${entry.field_4}'`
+                const userSql = `select * from t_6MC9hz where field_4 = '${entry.field_4}'`
                 saleResult = await HELP.sqlExecute( userSql )
                 HELP.log( `saleResult: ${JSON.stringify( saleResult )}` )
 
@@ -236,8 +236,6 @@ module.exports = {
             }
 
             if ( result1[0].count === 0 ) {
-                // await HELP.sqlExecute( sql )
-                // HELP.log( `${logFile} postFormData t_${tableID} insert success` )
                 const unioSql = `insert into t_${tableID}_unio (g_c_name, g_c_grade, g_c_class, g_c_sex, g_c_school,
                     g_c_address, g_c_room, g_c_stuendId, g_c_desc, ${tableField},
                     s_c_leader, s_c_name, s_c_school, s_c_grade, s_c_phone, s_c_qq, s_c_type, s_c_recode) values
@@ -299,6 +297,85 @@ module.exports = {
             res.send( 200 )
         } catch ( e ) {
             HELP.error( `${logFile} postFormData error: ${e.message}`.red )
+            res.send( { ecode: -1, msg: e.message } )
+        }
+    },
+
+    // update sale
+    async postFromDataSale ( req, res ) {
+        HELP.log( `${logFile} postFromDataSale: ${JSON.stringify( req.body )}` )
+        try {
+            let tableID = req.body.form
+            let entry = req.body.entry
+            let tableField = []
+            let tableValue = []
+            for ( var item in entry ) {
+                tableField.push( `${item}` )
+                if ( entry[item] instanceof Object ) {
+                    tableValue.push( `'${JSON.stringify( entry[item] )}'` )
+                } else {
+                    if ( HELP.isdatetime( entry[item] ) && item != 'info_os' ) {
+                        HELP.log(
+                            `${logFile} postFromDataSale datetime ${item}: ${
+                                entry[item]
+                            }`
+                        )
+                        tableValue.push(
+                            `'${moment( entry[item] ).format(
+                                'YYYY-MM-DD HH:mm:ss'
+                            )}'`
+                        )
+                    } else {
+                        tableValue.push( `'${entry[item]}'` )
+                    }
+                }
+            }
+            const sql1 = `select count(*) as count from t_${tableID} where serial_number = '${
+                entry.serial_number
+            }'`
+            HELP.log( `${logFile} postFromDataSale sql is: ${sql1}` )
+            const result1 = await HELP.sqlExecute( sql1 )
+            HELP.log(
+                `select t_${tableID} count: ${JSON.stringify( result1 )}`
+            )
+
+            if ( result1[0].count === 0 ) {
+                const unioSql = `insert into t_${tableID} (${tableField}) values(${tableValue.join( ',' )}})`
+                HELP.log( `unioSql Insert: ${unioSql}`.yellow )
+                await HELP.sqlExecute( unioSql )
+                HELP.log( `${logFile} postFromDataSale t_${tableID} insert success`.green )
+            } else {
+                let setArray = []
+                for ( var sitem in entry ) {
+                    if ( sitem !== 'serial_number' ) {
+                        if ( entry[sitem] instanceof Object ) {
+                            setArray.push(
+                                `${sitem} = '${JSON.stringify( entry[sitem] )}'`
+                            )
+                        } else {
+                            // setArray.push( `${sitem} = '${entry[sitem]}'` )
+                            if ( HELP.isdatetime( entry[sitem] ) && sitem != 'info_os' ) {
+                                HELP.log( `${logFile} postFromDataSale datetime ${sitem}: ${entry[sitem]}` )
+                                setArray.push( `${sitem} = '${moment( entry[sitem] ).format( 'YYYY-MM-DD HH:mm:ss' )}'`
+                                )
+                            } else {
+                                setArray.push( `${sitem} = '${entry[sitem]}'` )
+                            }
+                        }
+                    }
+                }
+
+                const unioSql = `update t_${tableID}_unio set ${setArray.join( ',' )} where serial_number = ${entry.serial_number}`
+                HELP.log( `unioSql update: ${unioSql}`.yellow )
+                await HELP.sqlExecute( unioSql )
+                HELP.log(
+                    `${logFile} postFromDataSale t_${tableID}_unio update success`
+                        .green
+                )
+            }
+            res.send( 200 )
+        } catch ( e ) {
+            HELP.error( `${logFile} postFromDataSale error: ${e.message}`.red )
             res.send( { ecode: -1, msg: e.message } )
         }
     }
