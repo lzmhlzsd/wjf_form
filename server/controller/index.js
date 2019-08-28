@@ -365,11 +365,11 @@ module.exports = {
                     }
                 }
 
-                const unioSql = `update t_${tableID}_unio set ${setArray.join( ',' )} where serial_number = ${entry.serial_number}`
+                const unioSql = `update t_${tableID} set ${setArray.join( ',' )} where serial_number = ${entry.serial_number}`
                 HELP.log( `unioSql update: ${unioSql}`.yellow )
                 await HELP.sqlExecute( unioSql )
                 HELP.log(
-                    `${logFile} postFromDataSale t_${tableID}_unio update success`
+                    `${logFile} postFromDataSale t_${tableID} update success`
                         .green
                 )
             }
