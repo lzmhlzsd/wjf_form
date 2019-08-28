@@ -13,5 +13,5 @@ router.get( '/getFormById', indexCtrl.getFormById )
 router.post( '/getFormList', indexCtrl.getFormList )
 router.post( '/getFormData', indexCtrl.getFormData )
 router.post( '/postFormData', indexCtrl.postFormData )
-
+router.post( '/postFromDataSale', indexCtrl.postFromDataSale )
 module.exports = router
