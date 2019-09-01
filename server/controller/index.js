@@ -296,7 +296,7 @@ module.exports = {
                 // HELP.log( `${logFile} postFormData t_${tableID} update success` )
 
                 let updateUserResultArray = [
-                    `g_c_name = '${userResult.length > 0 ? userResult[0].c_name : ''}' }'`,
+                    `g_c_name = '${userResult.length > 0 ? userResult[0].c_name : ''}'`,
                     `g_c_grade = '${userResult.length > 0 ? userResult[0].c_grade : ''}'`,
                     `g_c_class = '${userResult.length > 0 ? userResult[0].c_class : ''}'`,
                     `g_c_sex = '${userResult.length > 0 ? userResult[0].c_sex : ''}'`,
