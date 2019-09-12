@@ -158,6 +158,8 @@ module.exports = {
                     if ( HELP.isdatetime( entry[item] ) && item != 'info_os' ) {
                         HELP.log( `${logFile} postFormData datetime ${item}: ${entry[item]}` )
                         tableValue.push( `'${moment( entry[item] ).format( 'YYYY-MM-DD HH:mm:ss' )}'` )
+                    } else if ( item === 'x_field_weixin_nickname' ) {
+                        tableValue.push( `'nickname'` )
                     } else {
                         tableValue.push( `'${entry[item]}'` )
                     }
@@ -283,8 +285,14 @@ module.exports = {
                             if ( HELP.isdatetime( entry[sitem] ) && sitem != 'info_os' ) {
                                 HELP.log( `${logFile} postFormData datetime ${sitem}: ${entry[sitem]}` )
                                 setArray.push( `${sitem} = '${moment( entry[sitem] ).format( 'YYYY-MM-DD HH:mm:ss' )}'` )
+                            } else if ( sitem === 'x_field_weixin_nickname' ) {
+                                setArray.push(
+                                    `${sitem} = 'nickname'`
+                                )
                             } else {
-                                setArray.push( `${sitem} = '${entry[sitem]}'` )
+                                setArray.push(
+                                    `${sitem} = '${entry[sitem]}'`
+                                )
                             }
                         }
                     }
