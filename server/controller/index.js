@@ -169,7 +169,7 @@ module.exports = {
                         )
                     } else if (
                         item === 'x_field_weixin_nickname' ||
-            item === 'x_field_weixin_province_city'
+                             item === 'x_field_weixin_province_city'
                     ) {
                         tableValue.push( `'null'` )
                     } else {
@@ -281,11 +281,13 @@ module.exports = {
                                 )
                             } else if (
                                 sitem === 'x_field_weixin_nickname' ||
-                sitem === 'x_field_weixin_province_city'
+                                     sitem === 'x_field_weixin_province_city'
                             ) {
                                 setArray.push( `${sitem} = 'null'` )
                             } else {
-                                setArray.push( `${sitem} = '${entry[sitem]}'` )
+                                setArray.push(
+                                    `${sitem} = '${entry[sitem]}'`
+                                )
                             }
                         }
                     }
